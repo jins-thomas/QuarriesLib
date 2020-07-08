@@ -1,0 +1,2 @@
+rootProject.name='QuarriesAndFeedback'
+include ':myLib'
