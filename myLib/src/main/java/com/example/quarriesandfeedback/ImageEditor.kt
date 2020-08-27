@@ -73,4 +73,9 @@ class ImageEditor : AppCompatActivity() {
             view.undo()
         }
     }
+
+    override fun onBackPressed() {
+        startService(Intent(this, OverlayButton::class.java))
+        finish()
+    }
 }
