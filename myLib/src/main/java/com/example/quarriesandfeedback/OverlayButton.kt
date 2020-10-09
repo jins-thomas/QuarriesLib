@@ -143,6 +143,7 @@ class OverlayButton : Service() {
         bitmap.compress(Bitmap.CompressFormat.PNG, 100, bStream)
         val byteArray = bStream.toByteArray()
         val intent = Intent(this, ImageEditor::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
         intent.putExtra("BitmapImage", byteArray)
         startActivity(intent)
         return bitmap
