@@ -17,7 +17,6 @@ class MainActivity : AppCompatActivity(),CallBackImageEditor {
         setContentView(R.layout.activity_main)
 
         askPermission()
-
         FeedBackAndQuarriesLib.setListener(this)
     }
 
@@ -35,6 +34,6 @@ class MainActivity : AppCompatActivity(),CallBackImageEditor {
     }
 
     override fun CallBackImageEditor(bitmap: Bitmap) {
-
+        System.out.println("yyyyyyyyyyyy")
     }
 }
