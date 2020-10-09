@@ -13,7 +13,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
-
+import java.io.FileInputStream
 
 
 class ImageEditor : AppCompatActivity() {
@@ -27,14 +27,22 @@ class ImageEditor : AppCompatActivity() {
     lateinit var callBackImageEditor: CallBackImageEditor
     lateinit var yellowLayout: TextView
     lateinit var blackLayout: TextView
+    lateinit var filename:String
+
 
     @RequiresApi(Build.VERSION_CODES.M)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.image_editor)
-        if(intent.getByteArrayExtra("BitmapImage")!=null){
-            byteArray = intent.getByteArrayExtra("BitmapImage")!!
-            bmp = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.size)
+
+            filename= intent.getStringExtra("BitmapImage").toString()
+            try {
+                val `is`: FileInputStream = openFileInput(filename)
+                bmp = BitmapFactory.decodeStream(`is`)
+                `is`.close()
+            } catch (e: Exception) {
+                e.printStackTrace()
+
         }
 
         done=findViewById(R.id.doneButton)
@@ -60,11 +68,10 @@ class ImageEditor : AppCompatActivity() {
         done.setOnClickListener{
             startService(Intent(this, OverlayButton::class.java))
             val bitmap = Bitmap.createBitmap(
-                imageView.width,
-                imageView.height, Bitmap.Config.ARGB_8888
+                view.width,
+                view.height, Bitmap.Config.ARGB_8888
             )
             view.draw(Canvas(bitmap))
-            imageView.draw(Canvas(bitmap))
             callBackImageEditor.CallBackImageEditor(bitmap)
             finish()
         }

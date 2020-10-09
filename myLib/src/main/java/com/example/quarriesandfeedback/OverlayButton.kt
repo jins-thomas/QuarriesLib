@@ -1,12 +1,14 @@
 package com.example.quarriesandfeedback
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.app.Service
 import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.PixelFormat
+import android.os.AsyncTask
 import android.os.Build
 import android.os.IBinder
 import android.view.LayoutInflater
@@ -15,9 +17,12 @@ import android.view.View
 import android.view.View.OnTouchListener
 import android.view.WindowManager
 import android.widget.ImageView
+import androidx.core.content.ContextCompat.startActivity
 import com.example.quarriesandfeedback.FeedBackAndQuarriesLib.mCurrentActivity
 
 import java.io.ByteArrayOutputStream
+import java.io.File
+import java.io.FileOutputStream
 
 
 class OverlayButton : Service() {
@@ -140,13 +145,40 @@ class OverlayButton : Service() {
         val canvas = Canvas(bitmap)
         view.draw(canvas)
         val bStream = ByteArrayOutputStream()
-        bitmap.compress(Bitmap.CompressFormat.PNG, 60, bStream)
-        val byteArray = bStream.toByteArray()
-        val intent = Intent(this, ImageEditor::class.java)
-        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-        intent.putExtra("BitmapImage", byteArray)
-        startActivity(intent)
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, bStream)
+
+        someTask(bitmap,this).execute()
+
+       // val byteArray = bStream.toByteArray()
+
         return bitmap
+    }
+
+    class someTask(val bitmap:Bitmap, private val context: OverlayButton) : AsyncTask<Void, Void, String>() {
+        override fun doInBackground(vararg params: Void?): String? {
+
+            val stream: FileOutputStream =
+                context.openFileOutput("Screencapture.png", Context.MODE_PRIVATE)
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream)
+            stream.close()
+            bitmap.recycle()
+            return null
+        }
+
+        override fun onPreExecute() {
+            super.onPreExecute()
+
+        }
+
+        override fun onPostExecute(result: String?) {
+            super.onPostExecute(result)
+            val intent = Intent(context, ImageEditor::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+            intent.putExtra("BitmapImage", "Screencapture.png")
+            context.startActivity(intent)
+
+        }
+
     }
 
 
