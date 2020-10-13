@@ -28,21 +28,6 @@
         tools:srcCompat="@tools:sample/avatars" />
 
 
-
-
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginBottom="16dp"
-        app:layout_constraintBottom_toTopOf="@+id/view2"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/view"
-        tools:srcCompat="@tools:sample/avatars" />
-
-
     <View
         android:id="@+id/view2"
         android:layout_width="0dp"
@@ -86,17 +71,28 @@
         app:layout_constraintStart_toEndOf="@+id/yellowLayout"
         app:layout_constraintTop_toTopOf="@+id/yellowLayout" />
 
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintBottom_toTopOf="@+id/view2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/view"
+        tools:srcCompat="@tools:sample/avatars" />
+
     <com.example.quarriesandfeedback.DrawView
         android:id="@+id/drawView"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:visibility="invisible"
         android:background="@android:color/transparent"
+        android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="@+id/screenView"
         app:layout_constraintEnd_toEndOf="@+id/screenView"
         app:layout_constraintStart_toStartOf="@+id/screenView"
-        app:layout_constraintTop_toTopOf="@+id/screenView"
-        />
+        app:layout_constraintTop_toTopOf="@+id/screenView" />
 
     <Button
         android:id="@+id/undo"

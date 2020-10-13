@@ -72,6 +72,7 @@ class ImageEditor : AppCompatActivity() {
                 view.height, Bitmap.Config.ARGB_8888
             )
             view.draw(Canvas(bitmap))
+
             callBackImageEditor.CallBackImageEditor(bitmap)
             finish()
         }
