@@ -1,10 +1,7 @@
 package com.example.quarriesandfeedback
 
 import android.content.Intent
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
-import android.graphics.Canvas
-import android.graphics.Color
+import android.graphics.*
 import android.os.Build
 import android.os.Bundle
 import android.view.View
@@ -49,11 +46,13 @@ class ImageEditor : AppCompatActivity() {
         undo=findViewById(R.id.undo)
         imageView=findViewById(R.id.imageView)
         view=findViewById(R.id.drawView)
+
         yellowLayout=findViewById(R.id.yellowLayout)
         blackLayout=findViewById(R.id.blackLayout)
+
         callBackImageEditor = FeedBackAndQuarriesLib.callBackImageEditor!!
         imageView.setImageBitmap(bmp)
-        view.draw(Canvas(bmp))
+
 
         yellowLayout.setOnClickListener{
              var color = Color.parseColor("#FEFA0B")
@@ -70,18 +69,37 @@ class ImageEditor : AppCompatActivity() {
         done.setOnClickListener{
             startService(Intent(this, OverlayButton::class.java))
             val bitmap = Bitmap.createBitmap(
+                imageView.width,
+                imageView.height, Bitmap.Config.ARGB_8888
+            )
+
+            val bitmap1 = Bitmap.createBitmap(
                 view.width,
                 view.height, Bitmap.Config.ARGB_8888
             )
-            view.draw(Canvas(bitmap))
 
-            callBackImageEditor.CallBackImageEditor(bitmap)
+            imageView.draw(Canvas(bitmap))
+            view.draw(Canvas(bitmap1))
+
+
+
+
+            overlay(bitmap,bitmap1)?.let { it1 -> callBackImageEditor.CallBackImageEditor(it1) }
             finish()
         }
 
         undo.setOnClickListener{
             view.undo()
         }
+    }
+
+    private fun overlay(bmp1: Bitmap, bmp2: Bitmap): Bitmap? {
+        val bmOverlay =
+            Bitmap.createBitmap(bmp1.width, bmp1.height, bmp1.config)
+        val canvas = Canvas(bmOverlay)
+        canvas.drawBitmap(bmp1, Matrix(), null)
+        canvas.drawBitmap(bmp2, Matrix(), null)
+        return bmOverlay
     }
 
     override fun onBackPressed() {
