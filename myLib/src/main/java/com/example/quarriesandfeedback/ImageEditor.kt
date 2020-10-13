@@ -53,7 +53,7 @@ class ImageEditor : AppCompatActivity() {
         blackLayout=findViewById(R.id.blackLayout)
         callBackImageEditor = FeedBackAndQuarriesLib.callBackImageEditor!!
         imageView.setImageBitmap(bmp)
-
+        view.draw(Canvas(bmp))
 
         yellowLayout.setOnClickListener{
              var color = Color.parseColor("#FEFA0B")
@@ -64,6 +64,8 @@ class ImageEditor : AppCompatActivity() {
             view.visibility=View.VISIBLE;
             view.setBrushColor(Color.BLACK)
         }
+
+
 
         done.setOnClickListener{
             startService(Intent(this, OverlayButton::class.java))
