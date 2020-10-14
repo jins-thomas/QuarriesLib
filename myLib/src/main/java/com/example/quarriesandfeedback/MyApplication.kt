@@ -6,6 +6,6 @@ class MyApplication : Application() {
 
     override fun onCreate() {
         super.onCreate()
-        FeedBackAndQuarriesLib.setUpLib(this)
+       // FeedBackAndQuarriesLib.setUpLib(this)
     }
 }

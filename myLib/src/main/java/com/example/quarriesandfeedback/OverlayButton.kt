@@ -35,6 +35,7 @@ class OverlayButton : Service() {
     private lateinit var closeButton: ImageView
     private lateinit var captureButton: ImageView
     var LAYOUT_FLAG = 0
+    lateinit var callBackImageEditor: CallBackImageEditor
 
 
     override fun onBind(intent: Intent?): IBinder? {
@@ -56,7 +57,7 @@ class OverlayButton : Service() {
         captureButton = mFloatingView.findViewById(R.id.captureButton)
 
 
-
+        callBackImageEditor = FeedBackAndQuarriesLib.callBackImageEditor!!
         /**
         Floating View
          */
@@ -104,10 +105,12 @@ class OverlayButton : Service() {
                                     mFloatingView.findViewById<View>(R.id.captureButton).visibility =
                                         View.VISIBLE
                                     closeButton.setImageResource(R.drawable.ic_baseline_close_24)
+                                    callBackImageEditor.OverlayButtonClickEvent(true)
                                 } else {
                                     mFloatingView.findViewById<View>(R.id.captureButton).visibility =
                                         View.GONE
                                     closeButton.setImageResource(R.drawable.ic_baseline_message_24)
+                                    callBackImageEditor.OverlayButtonClickEvent(false)
                                 }
                             }
                             return true

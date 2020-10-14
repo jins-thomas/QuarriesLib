@@ -36,4 +36,8 @@ class MainActivity : AppCompatActivity(),CallBackImageEditor {
     override fun CallBackImageEditor(bitmap: Bitmap) {
         System.out.println("yyyyyyyyyyyy")
     }
+
+    override fun OverlayButtonClickEvent(state: Boolean) {
+        System.out.println("yyyyyyyyyyyy"+state)
+    }
 }
