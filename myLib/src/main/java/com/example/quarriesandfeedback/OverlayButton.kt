@@ -30,7 +30,7 @@ class OverlayButton : Service() {
     private var mWindowManager: WindowManager? = null
     var mFloatingViewParams: WindowManager.LayoutParams? = null
     var transparentParams: WindowManager.LayoutParams? = null
-    private lateinit var mFloatingView: View
+    lateinit var mFloatingView: View
     private var transparentView: View? = null
     private lateinit var closeButton: ImageView
     private lateinit var captureButton: ImageView
@@ -42,8 +42,8 @@ class OverlayButton : Service() {
         TODO("Not yet implemented")
     }
 
-    override fun onCreate() {
-        super.onCreate()
+    override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
+
         mFloatingView = LayoutInflater.from(this).inflate(R.layout.overlay_layout, null)
         // transparentView = LayoutInflater.from(this).inflate(R.layout.transparent_view, null)
         LAYOUT_FLAG = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -135,6 +135,13 @@ class OverlayButton : Service() {
                 screenShot(rootView)
             }
         }
+
+        return super.onStartCommand(intent, flags, startId)
+    }
+
+    override fun onCreate() {
+        super.onCreate()
+
     }
 
     fun screenShot(view: View): Bitmap? {
@@ -183,6 +190,15 @@ class OverlayButton : Service() {
         }
 
     }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        mFloatingView.findViewById<View>(R.id.captureButton).visibility = View.GONE
+        mFloatingView.findViewById<View>(R.id.buttonClose).visibility = View.GONE
+        stopSelf()
+    }
+
+
 
 
     }
